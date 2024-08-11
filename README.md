@@ -48,7 +48,7 @@ bun run tauri build
 - [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for building custom designs.
 - [DaisyUI](https://daisyui.com/) - A component library for Tailwind CSS.
 - [Typescript](https://www.typescriptlang.org/) - An open-source language which builds on JavaScript by adding static type definitions.
-
+- [CfSpeedtest](https://github.com/code-inflation/cfspeedtest) - Unofficial CLI for [speed.cloudflare.com](speed.cloudflare.com)
 ## Contributing
 
 Any contributions you make are greatly appreciated.
