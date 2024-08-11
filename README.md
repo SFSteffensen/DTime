@@ -44,6 +44,9 @@ bun run tauri build
 
 - [Tauri](https://tauri.studio/) - A framework for building lightweight, secure applications with web technologies.
 - [Solid](https://www.solidjs.com/) - A declarative JavaScript library for building user interfaces.
+- [Bun](https://bun.sh) - A fast all-in-one toolkit.
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for building custom designs.
+- [DaisyUI](https://daisyui.com/) - A component library for Tailwind CSS.
 - [Typescript](https://www.typescriptlang.org/) - An open-source language which builds on JavaScript by adding static type definitions.
 
 ## Contributing
