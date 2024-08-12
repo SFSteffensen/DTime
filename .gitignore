@@ -1,2 +1,6 @@
 node_modules
 dist
+# ignore yarn files
+yarn.lock
+package-lock.json
+bun.lockb
