@@ -1,8 +1,9 @@
 node_modules
 dist
-# ignore yarn files
 yarn.lock
 package-lock.json
 bun.lockb
 .pnp.cjs
 .pnp.loader.mjs
+# ignore .DS_Store everywhere
+.DS_Store
