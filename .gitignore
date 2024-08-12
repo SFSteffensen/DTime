@@ -3,6 +3,7 @@ dist
 package-lock.json
 bun.lockb
 .pnp.cjs
+.yarn
 .pnp.loader.mjs
 # ignore .DS_Store everywhere
 .DS_Store
