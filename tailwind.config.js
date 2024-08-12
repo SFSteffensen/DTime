@@ -7,6 +7,20 @@ export default {
       fontFamily: {
         'sans': ['Inter', 'sans-serif'],
       },
+      keyframes: {
+        expand: {
+          '0%': { maxHeight: '0px', opacity: '0' },
+          '100%': { maxHeight: '500px', opacity: '1' },
+        },
+        collapse: {
+          '0%': { maxHeight: '500px', opacity: '1' },
+          '100%': { maxHeight: '0px', opacity: '0' },
+        },
+      },
+      animation: {
+        expand: 'expand 0.5s ease-out forwards',
+        collapse: 'collapse 0.5s ease-out forwards',
+      },
     },
   },
   daisyui: {
@@ -43,7 +57,6 @@ export default {
       "cyberpunk",
       "aqua",
       "valentine",
-      "pastel",
     ],
   },
   plugins: [

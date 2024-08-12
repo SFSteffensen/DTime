@@ -63,8 +63,6 @@ function App() {
     }
   }
 
-
-
   async function testSpeed() {
     setLoadingSpeedTest(true);
     try {
@@ -89,12 +87,12 @@ function App() {
         <h1 class="text-center text-3xl font-bold tracking-tighter">File Size & Internet Speed Calculator</h1>
         <p class="text-accent text-center">Quickly calculate the download time for any file based on your internet speed.</p>
         <form class="mt-8 space-y-4">
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 gap-4">
             <div class="grid gap-2">
               <label class="text-sm font-medium">File Size</label>
-              <div class="flex items-center gap-2">
+              <div class="flex gap-2">
                 <input type="number" min="0" placeholder="0" class="form-control flex-1 px-4 py-3 input input-bordered input-primary" onInput={(e) => setFileSize(+e.currentTarget.value)} />
-                <select class="select select-primary w-full max-w-xs" onChange={(e) => setFileSizeUnit(e.currentTarget.value)}>
+                <select class="select select-primary flex-none w-24" onChange={(e) => setFileSizeUnit(e.currentTarget.value)}>
                   <option disabled selected>Unit</option>
                   <option value="b">B</option>
                   <option value="kb">KB</option>
@@ -106,9 +104,9 @@ function App() {
             </div>
             <div class="grid gap-2">
               <label class="text-sm font-medium">Internet Speed</label>
-              <div class="flex items-center gap-2">
+              <div class="flex gap-2">
                 <input id="internet-speed" type="number" min="0" placeholder="0" class="form-control flex-1 px-4 py-3 input input-bordered input-primary" onInput={(e) => setDownloadSpeed(+e.currentTarget.value)} />
-                <select id="internet-speed-unit" class="select select-primary w-full max-w-xs" onChange={(e) => setInternetSpeedUnit(e.currentTarget.value)}>
+                <select id="internet-speed-unit" class="select select-primary flex-none w-24" onChange={(e) => setInternetSpeedUnit(e.currentTarget.value)}>
                   <option disabled selected>Unit</option>
                   <option value="bps">B/s</option>
                   <option value="kbps">Kbps</option>
@@ -121,7 +119,7 @@ function App() {
               </div>
             </div>
           </div>
-          <div class="flex gap-2">
+          <div class="flex flex-col sm:flex-row gap-2">
             <button type="button" class="btn btn-primary flex-1" onClick={calculate} disabled={loadingCalculate() || !fileSize() || !downloadSpeed() || !fileSizeUnit() || !internetSpeedUnit()}>
               {loadingCalculate() ? "Calculating..." : "Calculate"}
             </button>
@@ -140,29 +138,19 @@ function App() {
         </div>
       </div>
       <div class="absolute top-0 right-0 mt-4 mr-4">
-        <details class="collapse collapse-arrow join-item border border-base-300">
-          <summary class="collapse-title text-xl font-medium">Theme</summary>
-          <div class="collapse-content">
-            {['light', 'dark', 'nord', 'retro', 'black', 'lofi', 'night', 'cyberpunk', 'aqua', 'valentine'].map(t => (
-              <div class="form-control" key={t}>
-                <label class="label cursor-pointer gap-4">
-                  <span class="label-text">{capitalize(t)}</span>
-                  <input
-                    type="radio"
-                    name="theme-radios"
-                    class="radio theme-controller"
-                    value={t}
-                    checked={theme() === t}
-                    onChange={(e) => {
-                      handleThemeChange(e.currentTarget.value);
-                      e.currentTarget.closest('details')!.open = false;
-                    }}
-                  />
-                </label>
-              </div>
-            ))}
-          </div>
-        </details>
+        <select class="select select-bordered select-primary mt-2 w-64" onChange={(e) => handleThemeChange(e.currentTarget.value)}>
+          <option disabled selected>Theme</option>
+          <option value="light" selected={theme() === 'light'}>Light</option>
+          <option value="dark" selected={theme() === 'dark'}>Dark</option>
+          <option value="nord" selected={theme() === 'nord'}>Nord</option>
+          <option value="retro" selected={theme() === 'retro'}>Retro</option>
+          <option value="black" selected={theme() === 'black'}>Black</option>
+          <option value="lofi" selected={theme() === 'lofi'}>Lofi</option>
+          <option value="night" selected={theme() === 'night'}>Night</option>
+          <option value="cyberpunk" selected={theme() === 'cyberpunk'}>Cyberpunk</option>
+          <option value="aqua" selected={theme() === 'aqua'}>Aqua</option>
+          <option value="valentine" selected={theme() === 'valentine'}>Valentine</option>
+        </select>
       </div>
     </div>
   );
