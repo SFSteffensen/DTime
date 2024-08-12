@@ -1,10 +1,10 @@
 name: 'publish'
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - release
+  workflow_dispatch:
 
 jobs:
   publish-tauri:
@@ -14,9 +14,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-latest' # for Arm based macs (M1 and above).
+          - platform: 'macos-latest' # for Arm-based Macs (M1 and above).
             args: '--target aarch64-apple-darwin'
-          - platform: 'macos-latest' # for Intel based macs.
+          - platform: 'macos-latest' # for Intel-based Macs.
             args: '--target x86_64-apple-darwin'
           - platform: 'ubuntu-22.04'
             args: ''
@@ -40,7 +40,6 @@ jobs:
           cache: 'yarn' # Use yarn as the package manager.
 
       - name: install Rust stable and targets
-        uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly if you use nightly Rust.
         run: |
           rustup target add aarch64-apple-darwin
           rustup target add x86_64-apple-darwin
