@@ -37,10 +37,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-          cache: 'bun' # Use 'bun' for bun package manager.
-
-      - name: install Bun
-        run: curl -fsSL https://bun.sh/install | bash
+          cache: 'yarn' # Use yarn as the package manager.
 
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly if you use nightly Rust.
@@ -54,10 +51,10 @@ jobs:
           workspaces: './src-tauri -> target'
 
       - name: install frontend dependencies
-        run: bun install
+        run: yarn install
 
       - name: build frontend
-        run: bun run build
+        run: yarn build
 
       - uses: tauri-apps/tauri-action@v0
         env:
