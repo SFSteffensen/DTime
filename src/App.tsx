@@ -34,16 +34,36 @@ function App() {
     setLoadingCalculate(true);
     try {
       const downloadTimeResult = await invoke("calculate_download_time", { fileSize: fileSizeInBytes(), downloadSpeed: downloadSpeedInBytesPerSecond() });
-      const { hours, minutes, seconds } = downloadTimeResult as { hours: number, minutes: number, seconds: number };
-      const downloadTimeStr = `${hours} ${hours === 1 ? "Hour" : "Hours"} ${minutes} ${minutes === 1 ? "Minute" : "Minutes"} ${seconds} ${seconds === 1 ? "Second" : "Seconds"}`;
-      setDownloadTime(downloadTimeStr);
 
-      const finishTimeResult = await invoke("calculate_finish_time", { downloadTime: hours * 3600 + minutes * 60 + seconds });
-      setFinishTime(finishTimeResult as string);
+      if (typeof downloadTimeResult === "string") {
+        // Handle error from Rust backend
+        setDownloadTime("Sometime after the heat death of the universe...");
+        setFinishTime("");
+      } else {
+        const { hours, minutes, seconds } = downloadTimeResult as { hours: number, minutes: number, seconds: number };
+        const downloadTimeStr = `${hours} ${hours === 1 ? "Hour" : "Hours"} ${minutes} ${minutes === 1 ? "Minute" : "Minutes"} ${seconds} ${seconds === 1 ? "Second" : "Seconds"}`;
+        setDownloadTime(downloadTimeStr);
+
+        const finishTimeResult = await invoke("calculate_finish_time", { downloadTime: hours * 3600 + minutes * 60 + seconds });
+
+        if (typeof finishTimeResult === "string") {
+          setFinishTime(finishTimeResult);
+        } else {
+          // Handle the error case
+          setFinishTime("Calculation overflow, finish time is too large.");
+        }
+      }
+    } catch (error) {
+      // Catch unhandled promise rejections and other errors
+      console.error("Error calculating download time:", error);
+      setDownloadTime("Sometime after the heat death of the universe...");
+      setFinishTime("");
     } finally {
       setLoadingCalculate(false);
     }
   }
+
+
 
   async function testSpeed() {
     setLoadingSpeedTest(true);
