@@ -9,18 +9,27 @@ jobs:
   publish-tauri:
     permissions:
       contents: write
-    runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - platform: "macos-latest"
-            args: "" # Build natively for macOS
-          - platform: "ubuntu-22.04"
-            args: "" # Build natively for Linux
-          - platform: "windows-latest"
-            args: "" # Build natively for Windows
+          - platform: "macos-latest" # for macOS and cross-compilation to Windows and Linux.
+            args: "--target x86_64-apple-darwin"
+            runner: ""
+          - platform: "macos-latest" # cross-compile for Windows.
+            args: "--target x86_64-pc-windows-msvc"
+            runner: "--runner cargo-xwin"
+          - platform: "macos-latest" # cross-compile for Ubuntu.
+            args: "--target x86_64-unknown-linux-gnu"
+            runner: ""
+          - platform: "windows-latest" # native Windows build.
+            args: ""
+            runner: ""
+          - platform: "ubuntu-22.04" # native Ubuntu build.
+            args: ""
+            runner: ""
 
+    runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
 
@@ -32,19 +41,25 @@ jobs:
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || matrix.platform == 'windows-latest' && 'x86_64-pc-windows-msvc' || '' }}
+          targets: ${{ matrix.args != '--target x86_64-apple-darwin' && 'x86_64-apple-darwin' || '' }}
+
+      - name: install cargo-xwin (for Windows cross-compilation)
+        if: matrix.args == '--target x86_64-pc-windows-msvc'
+        run: cargo install cargo-xwin
 
       - name: install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+        # webkitgtk 4.0 is for Tauri v1 - webkitgtk 4.1 is for Tauri v2.
+        # You can remove the one that doesn't apply to your app to speed up the workflow a bit.
 
       - name: install frontend dependencies
-        run: yarn install
+        run: yarn install # change this to npm, pnpm or bun depending on which one you use.
 
       - name: build Tauri app
-        run: yarn tauri build ${{ matrix.args }}
+        run: yarn tauri build ${{ matrix.runner }} ${{ matrix.args }}
 
       - uses: tauri-apps/tauri-action@v0
         env:
@@ -55,3 +70,4 @@ jobs:
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
           prerelease: false
+          args: ${{ matrix.args }}
