@@ -15,7 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 - [Rust](https://www.rust-lang.org/tools/install)
-- [Bun](https://github.com/xylophonez/bun)
+- [Yarn](https://yarnpkg.com)
 
 ### Installation
 
@@ -29,22 +29,22 @@ cd DTime
 ```
 3. Install dependencies
 ```bash
-bun install
+yarn install
 ```
 4. Run the application in development mode
 ```bash
-bun run tauri dev
+yarn run tauri dev
 ```
 5. Build the application for production
 ```bash
-bun run tauri build
+yarn run tauri build
 ```
 
 ## Built With
 
 - [Tauri](https://tauri.studio/) - A framework for building lightweight, secure applications with web technologies.
 - [Solid](https://www.solidjs.com/) - A declarative JavaScript library for building user interfaces.
-- [Bun](https://bun.sh) - A fast all-in-one toolkit.
+- [Yarn](https://yarnpkg.com) - Safe, stable, reproducible projects
 - [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for building custom designs.
 - [DaisyUI](https://daisyui.com/) - A component library for Tailwind CSS.
 - [Typescript](https://www.typescriptlang.org/) - An open-source language which builds on JavaScript by adding static type definitions.
