@@ -29,6 +29,40 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "identifier": "sfsteffensen.dev",
+    "resources": [],
+    "externalBin": [],
+    "macOS": {
+      "frameworks": [],
+      "minimumSystemVersion": "10.13",
+      "exceptionDomain": "",
+      "signingIdentity": null,
+      "entitlements": null,
+      "bundleIdentifier": "sfsteffensen.dev.DTime",
+      "category": "public.app-category.utilities",
+      "shortcuts": [
+        {
+          "name": "DTime",
+          "path": "/Applications/DTime.app",
+          "ascension": "APPLICATIONS"
+        }
+      ]
+    },
+    "windows": {
+      "certificateThumbprint": null,
+      "timestampUrl": null,
+      "signingAlgorithm": null
+    },
+    "linux": {
+      "category": "Utility"
+    },
+    "outputFormat": {
+      "dmg": "DTime_${version}_MacOS_${arch}.dmg",
+      "appImage": "DTime_${version}_Linux_${arch}.AppImage",
+      "deb": "DTime_${version}_Linux_${arch}.deb",
+      "msi": "DTime_${version}_Windows_${arch}.msi",
+      "nsis": "DTime_${version}_Windows_${arch}.exe"
+    }
   }
 }

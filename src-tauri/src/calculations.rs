@@ -1,6 +1,6 @@
 use cfspeedtest::speedtest::test_download;
 use cfspeedtest::OutputFormat;
-use chrono::{DateTime, Duration as ChronoDuration, Local, Timelike, Utc};
+use chrono::{DateTime, Duration as ChronoDuration, Utc};
 use serde::{Deserialize, Serialize};
 use std::time::Duration as StdDuration;
 use tauri::async_runtime::spawn_blocking;
