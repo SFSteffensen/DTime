@@ -15,20 +15,16 @@ jobs:
         include:
           - platform: "macos-latest" # for Arm-based Macs (M1 and above).
             args: "--target aarch64-apple-darwin"
-            arch: "aarch64"
-            ext: "dmg"
+            rust-target: "aarch64-apple-darwin"
           - platform: "macos-latest" # for Intel-based Macs.
             args: "--target x86_64-apple-darwin"
-            arch: "x64"
-            ext: "dmg"
+            rust-target: "x86_64-apple-darwin"
           - platform: "ubuntu-22.04" # for Ubuntu (Tauri v2)
             args: "--target x86_64-unknown-linux-gnu"
-            arch: "x64"
-            ext: "AppImage"
+            rust-target: "x86_64-unknown-linux-gnu"
           - platform: "windows-latest" # for Windows
             args: "--target x86_64-pc-windows-msvc"
-            arch: "x64"
-            ext: "msi"
+            rust-target: "x86_64-pc-windows-msvc"
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -43,7 +39,7 @@ jobs:
       - name: install Rust stable and target
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.args }}
+          targets: ${{ matrix.rust-target }}
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
@@ -60,24 +56,12 @@ jobs:
         run: yarn install
 
       - uses: tauri-apps/tauri-action@v0
-        id: build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: "app-v__VERSION__" # Automatically replaced with the app version from tauri.conf.json.
-          releaseName: "DTime v__VERSION__" # Automatically replaced with the app version.
-          releaseBody: "This is the official release of DTime version v__VERSION__." # Release notes with the app version.
+          tagName: app-v__VERSION__ # The action automatically replaces __VERSION__ with the app version.
+          releaseName: "DTime v__VERSION__" # The action automatically replaces __VERSION__ with the app version.
+          releaseBody: "This is the official release of DTime version __VERSION__." # The release notes.
           releaseDraft: false # Set to true if you want to create a draft release.
           prerelease: false # Set to true if this is a pre-release.
           args: ${{ matrix.args }}
-
-      - name: Rename the bundle
-        run: |
-          mv "src-tauri/target/release/bundle/${{ matrix.ext }}/DTime.${{ matrix.ext }}" "src-tauri/target/release/bundle/${{ matrix.ext }}/DTime_${{ steps.build.outputs.version }}_${{ matrix.platform }}_${{ matrix.arch }}.${{ matrix.ext }}"
-        if: always() # Ensure it runs even if the build fails
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: "DTime_${{ steps.build.outputs.version }}_${{ matrix.platform }}_${{ matrix.arch }}.${{ matrix.ext }}"
-          path: "src-tauri/target/release/bundle/${{ matrix.ext }}/DTime_${{ steps.build.outputs.version }}_${{ matrix.platform }}_${{ matrix.arch }}.${{ matrix.ext }}"
