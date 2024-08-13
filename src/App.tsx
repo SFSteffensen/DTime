@@ -76,10 +76,16 @@ function App() {
 
       const unitInput = document.getElementById("internet-speed-unit") as HTMLSelectElement;
       if (unitInput) unitInput.value = "mbps";
+
+      // Automatically run the calculate function if file size and unit are set
+      if (fileSize() && fileSizeUnit()) {
+        await calculate();
+      }
     } finally {
       setLoadingSpeedTest(false);
     }
   }
+
 
   return (
     <div class="flex items-center justify-center min-h-screen bg-base-100 text-base-content">
@@ -124,7 +130,7 @@ function App() {
               {loadingCalculate() ? "Calculating..." : "Calculate"}
             </button>
             <button type="button" class="btn btn-outline btn-primary flex-1" onClick={testSpeed} disabled={loadingSpeedTest()}>
-              {loadingSpeedTest() ? "Testing..." : "Test Speed"}
+              {loadingSpeedTest() ? "Measuring Speed..." : "Measure Speed"}
             </button>
           </div>
         </form>
