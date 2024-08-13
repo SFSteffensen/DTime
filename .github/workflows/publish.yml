@@ -13,18 +13,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: "macos-latest" # for Arm-based Macs (M1 and above).
-            args: "--target aarch64-apple-darwin"
-            rust-target: "aarch64-apple-darwin"
-          - platform: "macos-latest" # for Intel-based Macs.
-            args: "--target x86_64-apple-darwin"
-            rust-target: "x86_64-apple-darwin"
-          - platform: "ubuntu-22.04" # for Ubuntu (Tauri v2)
-            args: "--target x86_64-unknown-linux-gnu"
-            rust-target: "x86_64-unknown-linux-gnu"
-          - platform: "windows-latest" # for Windows
-            args: "--target x86_64-pc-windows-msvc"
-            rust-target: "x86_64-pc-windows-msvc"
+        - platform: "macos-latest" # for Arm-based Macs (M1 and above).
+          args: "--target aarch64-apple-darwin"
+          rust-target: "aarch64-apple-darwin"
+        - platform: "macos-latest" # for Intel-based Macs.
+          args: "--target x86_64-apple-darwin"
+          rust-target: "x86_64-apple-darwin"
+        - platform: "ubuntu-22.04" # for Ubuntu (Tauri v2)
+          args: "--target x86_64-unknown-linux-gnu"
+          rust-target: "x86_64-unknown-linux-gnu"
+        - platform: "windows-latest" # for Windows
+          args: "--target x86_64-pc-windows-msvc"
+          rust-target: "x86_64-pc-windows-msvc"
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -64,4 +64,5 @@ jobs:
           releaseBody: "This is the official release of DTime version __VERSION__." # The release notes.
           releaseDraft: false # Set to true if you want to create a draft release.
           prerelease: false # Set to true if this is a pre-release.
+          generateReleaseNotes: true # Automatically generate release notes based on commits and PRs.
           args: ${{ matrix.args }}
