@@ -1,5 +1,5 @@
 {
-  "productName": "dtime",
+  "productName": "DTime",
   "version": "1.0.0",
   "identifier": "sfsteffensen.dev",
   "build": {
@@ -11,7 +11,7 @@
   "app": {
     "windows": [
       {
-        "title": "dtime",
+        "title": "DTime",
         "width": 800,
         "height": 600
       }
