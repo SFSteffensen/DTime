@@ -59,7 +59,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: app-v__VERSION__ # The action automatically replaces __VERSION__ with the app version.
+          tagName: DTime__VERSION__ # The action automatically replaces __VERSION__ with the app version.
           releaseName: "DTime v__VERSION__" # The action automatically replaces __VERSION__ with the app version.
           releaseBody: "This is the official release of DTime version __VERSION__." # The release notes.
           releaseDraft: false # Set to true if you want to create a draft release.
